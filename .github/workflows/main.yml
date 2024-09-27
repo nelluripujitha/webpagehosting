@@ -10,28 +10,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Copy files to EC2
-      uses: appleboy/scp-action@v0.1.3
-      with:
-        host: ${{ secrets.HOST_DNS}}
-        username: ${{ secrets.USERNAME}}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        target: ${{ secrets.TARGET_DIR }}
+      - name: Deploy to server
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
 
-    - name: Restart Nginx on EC2
-      uses: appleboy/ssh-action@v0.1.3
-      with:
-        host: ${{ secrets.HOST_DNS}}
-        username: ${{ secrets.USERNAME}}
-        key: ${{ secrets.EC2_SSH_KEY }}
-        target: ${{ secrets.TARGET_DIR }}
-        script: |
-          sudo apt-get -y update
-          sudo apt-get install -y apache2
-          sudo systemct1 start apache2
-          sudo systemct1 enable apache2
-          cd home
-          sudo mv */var/www/html
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@master
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          script: |
+            sudo apt-get -y update
+            sudo apt-get install -y apache2
+            sudo systemctl start apache2
+            sudo systemctl enable apache2
+            cd /home
+            sudo mv * /var/www/html
