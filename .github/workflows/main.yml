@@ -21,7 +21,7 @@ jobs:
       - name: Deploy to server1
         uses: easingthemes/ssh-deploy@v1.1.0 # Ensure you have the latest version
         env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KEY: ${{ secrets.EC2_SSH_KEY}}
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
