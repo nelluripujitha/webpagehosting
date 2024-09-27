@@ -10,17 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repsoitory
+      - name: Checkout repository
         uses: actions/checkout@v3.6.0
-      - name: Deploy to server1
+        
+      - name: Deploy to server
         uses: easingthemes/ssh-deploy@main
         env:
+          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true  # Allow use of insecure node version
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
 
-      - name: Executing remote ssh commands using ssh key
+      - name: Executing remote SSH commands using SSH key
         uses: appleboy/ssh-action@master
         with:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
