@@ -11,9 +11,8 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.4.0
-
-      - name: Deploy to server
+        uses: actions/checkout@v3
+      - name: Deploy to server1
         uses: easingthemes/ssh-deploy@main
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
