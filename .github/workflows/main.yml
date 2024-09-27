@@ -16,7 +16,7 @@ jobs:
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@main
         env:
-          ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true  # Allow use of insecure node version
+          FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true  # Allow use of insecure node version
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
