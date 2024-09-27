@@ -11,19 +11,18 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-        
-      - name: Deploy to server
-        uses: easingthemes/ssh-deploy@main
+        uses: actions/checkout@v3.6.0 # This is the latest stable version
+
+      - name: Deploy to server1
+        uses: easingthemes/ssh-deploy@v1.1.0 # Updated to a stable version
         env:
-          FORCE_JAVASCRIPT_ACTIONS_TO_NODE20: true  # Allow use of insecure node version
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
 
-      - name: Executing remote SSH commands using SSH key
-        uses: appleboy/ssh-action@master
+      - name: Executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v0.1.0 # You can update this to the latest stable version if available
         with:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
