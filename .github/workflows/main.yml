@@ -11,10 +11,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3.6.0 # This is the latest stable version
+        uses: actions/checkout@v3 # Use the latest stable version
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # Specify the latest supported version
 
       - name: Deploy to server1
-        uses: easingthemes/ssh-deploy@v1.1.0 # Updated to a stable version
+        uses: easingthemes/ssh-deploy@v1.1.0 # Update to a stable version
         env:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
@@ -22,7 +27,7 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
 
       - name: Executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v0.1.0 # You can update this to the latest stable version if available
+        uses: appleboy/ssh-action@v0.1.0 # Update to the latest stable version
         with:
           SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
           REMOTE_HOST: ${{ secrets.HOST_DNS }}
